@@ -1,5 +1,6 @@
 package hcmute.nguyenanhtuan.wordle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -7,6 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
     String[] keyArray = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
                         "A", "S", "D", "F", "G", "H", "J", "K", "L",
                         "Z", "X", "C", "V", "B", "N", "M"};
+    //firebase
+    FirebaseDatabase db;
+    DatabaseReference databaseReference;
+
     // word in a row
     String preWord;
     // list of word
@@ -101,6 +112,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void dataInit(){
+        db = FirebaseDatabase.getInstance();
+        databaseReference = db.getReference("Word");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                Log.d("Value is ", value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Failed to read value.", error.toException().toString());
+
+            }
+        });
+
         preWord = "";
         trueWord = "ALLOW";
         wordArray = new ArrayList<>(Arrays.asList("BREAK", "ABOVE", "BEGIN", "FLASH", "EQUAL",
