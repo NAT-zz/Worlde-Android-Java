@@ -10,5 +10,6 @@
 
     <color name="green">#1F922A</color>
     <color name="yellow">#CDC40B</color>
-    <color name="birghter_dark">#4E574F</color>
+    <color name="birghter_dark">#576058</color>
+    <color name="default_key">#333131</color>
 </resources>

@@ -3,12 +3,17 @@ package hcmute.nguyenanhtuan.wordle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     // word in a row
-    String preWord;
+    String preWord="";
     // list of word
-    ArrayList<String> wordArray;
+    ArrayList<String> wordArray = new ArrayList<>();
     // the answer
     String trueWord;
 
@@ -75,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 //                Log.d("row", "" + row_count);
 //                Log.d("col", "" + col_count);
 //                Log.d("check", "" + checkWordValid());
-//                Log.d("preword: ", preWord);
+                Log.d("preword: ", preWord);
 
                 int result = checkWordValid();
                 if (col_count == 6)
@@ -87,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "You Win", Toast.LENGTH_SHORT).show();
                     }
                     else if (result == 2) {
-                        Log.d("in", "co");
                         if (row_count != 6)
                             row_count++;
                         else
@@ -118,22 +124,18 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String value = snapshot.getValue(String.class);
-                Log.d("Value is ", value);
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    wordArray.add(postSnapshot.getValue().toString());
+                }
+                int random = new Random().nextInt(wordArray.size());
+                trueWord = wordArray.get(random);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("Failed to read value.", error.toException().toString());
-
             }
         });
-
-        preWord = "";
-        trueWord = "ALLOW";
-        wordArray = new ArrayList<>(Arrays.asList("BREAK", "ABOVE", "BEGIN", "FLASH", "EQUAL",
-                "INDEX", "IDEAL", "PRESS", "RAISE", "SHARE"));
-
     }
     private int checkWordValid() {
         if (preWord.equals(trueWord)) {
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             return 1;
         }
         else {
-            if (!Arrays.asList(wordArray).contains(preWord)) {
+            if (!wordArray.contains(preWord)) {
                 preWord = "";
                 return 0;
             }
@@ -170,7 +172,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else if (trueWord.contains(preWord.substring(i, i+1))) {
                         thisBox.setBackgroundColor(getResources().getColor(R.color.yellow));
-                        thisKey.setBackgroundColor(getResources().getColor(R.color.yellow));
+
+                        if (!Objects.equals(thisKey.getBackground().getConstantState(), MainActivity.this.getResources().getDrawable(R.color.yellow).getConstantState())) {
+                            // Do what you have to do...
+                            thisKey.setBackgroundColor(getResources().getColor(R.color.yellow));
+                        }
+
                     }
                     else {
                         thisBox.setBackgroundColor(getResources().getColor(R.color.birghter_dark));
