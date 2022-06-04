@@ -3,12 +3,12 @@ package hcmute.nguyenanhtuan.wordle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,12 +25,11 @@ public class MainActivity extends AppCompatActivity {
                         "A", "S", "D", "F", "G", "H", "J", "K", "L",
                         "Z", "X", "C", "V", "B", "N", "M"};
     // word in a row
-    String preWord = "";
-
-    // for testing
-    String[] wordArray = {"BREAK", "ABOVE", "BEGIN", "FLASH", "EQUAL",
-                        "INDEX", "IDEAL", "PRESS", "RAISE", "SHARE"};
-    String trueWord = "ALLOW";
+    String preWord;
+    // list of word
+    ArrayList<String> wordArray;
+    // the answer
+    String trueWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         enter = (TextView) findViewById(R.id.tv_enter);
         delete = (TextView) findViewById(R.id.tv_del);
+
+        dataInit();
+
         // keys on click
         for(int i=0;i<keyArray.length;i++)
         {
@@ -59,22 +61,28 @@ public class MainActivity extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Log.d("row", "" + row_count);
+//                Log.d("col", "" + col_count);
+//                Log.d("check", "" + checkWordValid());
+//                Log.d("preword: ", preWord);
+
+                int result = checkWordValid();
                 if (col_count == 6)
                 {
-                    if (checkWordValid() == 0) {
+                    if (result == 0) {
                         Toast.makeText(MainActivity.this, "Not in word list", Toast.LENGTH_SHORT).show();
                     }
-                    else if (checkWordValid() == 1){
-                        Toast.makeText(MainActivity.this, "Not in word list", Toast.LENGTH_SHORT).show();
+                    else if (result == 1){
+                        Toast.makeText(MainActivity.this, "You Win", Toast.LENGTH_SHORT).show();
                     }
-                    else if (checkWordValid() == 2) {
+                    else if (result == 2) {
+                        Log.d("in", "co");
                         if (row_count != 6)
                             row_count++;
                         else
                             Toast.makeText(MainActivity.this, "You failed", Toast.LENGTH_SHORT).show();
                         col_count = 1;
                     }
-
                 }
                 else Toast.makeText(MainActivity.this, "Finish the word", Toast.LENGTH_SHORT).show();
             }
@@ -92,7 +100,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void dataInit(){
+        preWord = "";
+        trueWord = "ALLOW";
+        wordArray = new ArrayList<>(Arrays.asList("BREAK", "ABOVE", "BEGIN", "FLASH", "EQUAL",
+                "INDEX", "IDEAL", "PRESS", "RAISE", "SHARE"));
 
+    }
     private int checkWordValid() {
         if (preWord.equals(trueWord)) {
             for (int i=1;i<=5;i++)
@@ -135,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                         thisKey.setBackgroundColor(getResources().getColor(R.color.birghter_dark));
                     }
                 }
+                preWord = "";
                 return 2;
             }
         }
