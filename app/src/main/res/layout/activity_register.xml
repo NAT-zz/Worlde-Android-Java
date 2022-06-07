@@ -6,4 +6,111 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+    <TextView
+        android:id="@+id/tv_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="114dp"
+
+        android:layout_marginTop="24dp"
+        android:text="Wordle"
+        android:textSize="100dp"
+
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_descrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="A product made by NAT and CHI"
+        android:textStyle="italic"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_banner" />
+
+    <EditText
+        android:id="@+id/et_fullname"
+        android:layout_width="317dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Full name"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_descrip" />
+
+    <EditText
+        android:id="@+id/et_age"
+        android:layout_width="317dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Age"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_fullname" />
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="317dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_age" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="317dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Password"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="317dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
+
+        android:text="Register"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="73dp"
+        android:layout_height="73dp"
+
+        android:visibility="gone"
+
+        app:layout_constraintBottom_toBottomOf="@+id/et_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_fullname" />
 </androidx.constraintlayout.widget.ConstraintLayout>

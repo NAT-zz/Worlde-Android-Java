@@ -3,6 +3,7 @@ package hcmute.nguyenanhtuan.wordle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     int row_count = 1;
     int col_count = 1;
 
+    // view
     TextView enter;
     TextView delete;
 
@@ -41,10 +45,13 @@ public class MainActivity extends AppCompatActivity {
     //firebase
     FirebaseDatabase db;
     DatabaseReference databaseReference;
+    // firebase authentication
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
 
     // word in a row
     String preWord="";
-    // list of word
+    // list of words
     ArrayList<String> wordArray = new ArrayList<>();
     // the answer
     String trueWord;
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             TextView thisKey = (TextView) findViewById(getkeyId);
 
             int finalI = i;
+            // set onclick logic to each key with the provided letter
             thisKey.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -79,9 +87,7 @@ public class MainActivity extends AppCompatActivity {
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.d("row", "" + row_count);
-//                Log.d("col", "" + col_count);
-//                Log.d("check", "" + checkWordValid());
+                // print the current word to log
                 Log.d("preword: ", preWord);
 
                 int result = checkWordValid();
@@ -104,11 +110,13 @@ public class MainActivity extends AppCompatActivity {
                 else Toast.makeText(MainActivity.this, "Finish the word", Toast.LENGTH_SHORT).show();
             }
         });
+        // delete-onclick logic
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (col_count != 1)
                     col_count--;
+                // get the box id
                 String genboxId = "tv_row" + row_count + "_" + col_count;
                 int getboxID = getResources().getIdentifier(genboxId, "id", getPackageName());
 
@@ -117,17 +125,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null)
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        if (currentUser == null)
+                startActivity(new Intent(this, LoginActivity.class));
+    }
     private void dataInit(){
+        // get Word data
         db = FirebaseDatabase.getInstance();
         databaseReference = db.getReference("Word");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // loop over the word list
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    // add word to current array
                     wordArray.add(postSnapshot.getValue().toString());
                 }
+                // get a random int
                 int random = new Random().nextInt(wordArray.size());
+                // get word with the int above
                 trueWord = wordArray.get(random);
             }
 
@@ -138,18 +160,22 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private int checkWordValid() {
+        // if the answer is corrent
         if (preWord.equals(trueWord)) {
             for (int i=1;i<=5;i++)
             {
+                // get the box id
                 String genboxId = "tv_row" + row_count + "_" + i;
                 int getboxID = getResources().getIdentifier(genboxId, "id", getPackageName());
 
+                // set the color for the box
                 TextView thisBox = (TextView) findViewById(getboxID);
                 thisBox.setBackgroundColor(getResources().getColor(R.color.green));
             }
             return 1;
         }
         else {
+            // if the word is not in the current array
             if (!wordArray.contains(preWord)) {
                 preWord = "";
                 return 0;
@@ -166,20 +192,21 @@ public class MainActivity extends AppCompatActivity {
                     int getkeyId = getResources().getIdentifier(genkeyId, "id", getPackageName());
                     TextView thisKey = (TextView) findViewById(getkeyId);
 
+                    // if the letter is at the right place
                     if (trueWord.charAt(i) == preWord.charAt(i)) {
+                        // change the background color of the box and the key to green
                         thisBox.setBackgroundColor(getResources().getColor(R.color.green));
                         thisKey.setBackgroundColor(getResources().getColor(R.color.green));
                     }
+                    // if the letter is in the answer
                     else if (trueWord.contains(preWord.substring(i, i+1))) {
+                        // change the background color of the box and the key to yellow
                         thisBox.setBackgroundColor(getResources().getColor(R.color.yellow));
-
-                        if (!Objects.equals(thisKey.getBackground().getConstantState(), MainActivity.this.getResources().getDrawable(R.color.yellow).getConstantState())) {
-                            // Do what you have to do...
-                            thisKey.setBackgroundColor(getResources().getColor(R.color.yellow));
-                        }
-
+                        thisKey.setBackgroundColor(getResources().getColor(R.color.yellow));
                     }
+                    // if the letter is not in the answer
                     else {
+                        // change the background color of the box and the key to brighter_dark
                         thisBox.setBackgroundColor(getResources().getColor(R.color.birghter_dark));
                         thisKey.setBackgroundColor(getResources().getColor(R.color.birghter_dark));
                     }
@@ -189,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    // key-onclick logic
     private void keyOnclick(String x){
         //generate box id
         if(col_count != 6) {
