@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
                         "A", "S", "D", "F", "G", "H", "J", "K", "L",
                         "Z", "X", "C", "V", "B", "N", "M"};
     //firebase
-    FirebaseDatabase db;
-    DatabaseReference databaseReference;
+    private FirebaseDatabase db;
+    private DatabaseReference databaseReference;
     // firebase authentication
-    FirebaseAuth mAuth;
-    FirebaseUser currentUser;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     // word in a row
     String preWord="";

@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView register;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +21,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         register.setOnClickListener(this);
     }
-    // map element with id
+    // map elements with ids
     private void mapping(){
         register = (TextView) findViewById(R.id.tv_register);
     }
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v){
         switch (v.getId()){
+            // to register
             case R.id.tv_register:
                 startActivity(new Intent(this, RegisterActivity.class));
                 break;
