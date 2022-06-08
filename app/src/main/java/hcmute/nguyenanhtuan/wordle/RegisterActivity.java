@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Locale;
@@ -30,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     // firebase
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
 
         mapping();
+
+        // init firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
         // element onclick
@@ -99,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             password.requestFocus();
             return;
         }
+        // check password's length
         if (str_password.length() < 6) {
             password.setError("Password length must contain at least 6 characters");
             password.requestFocus();
@@ -107,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         // show progress bar
         progressBar.setVisibility(View.VISIBLE);
-        // create user with email and password with to firebase
+        // create user with email and password to firebase
         mAuth.createUserWithEmailAndPassword(str_email, str_password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -115,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         // if user is created successfully
                         if (task.isSuccessful()){
                             // init new User
-                            User user = new User(str_fullName, str_age, str_email);
+                            User user = new User(str_fullName, str_email, str_password, str_age);
 
                             // also add user to realtime database
                             FirebaseDatabase.getInstance().getReference("Users")
@@ -125,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 public void onComplete(@NonNull Task<Void> task) {
                                     // is user is added
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(RegisterActivity.this, "Account created! Please verify your email!", Toast.LENGTH_LONG).show();
                                     }
                                     else{
                                         Toast.makeText(RegisterActivity.this, "Register failed, please try again!", Toast.LENGTH_LONG).show();
@@ -141,6 +146,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         progressBar.setVisibility(View.GONE);
                     }
                 });
+
+        // handle sending verification email
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    // NOTE: this Activity should get onpen only when the user is not signed in, otherwise
+                    // the user will receive another verification email.
+                    sendVerificationEmail();
+                } else {
+                    // User is signed out
+
+                }
+            }
+        };
+
     }
     // button-onclick logic
     @Override

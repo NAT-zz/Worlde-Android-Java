@@ -1041,7 +1041,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="529dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="454dp"
+        app:layout_constraintGuide_begin="498dp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -1049,6 +1049,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="16dp" />
+        app:layout_constraintGuide_begin="51dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
