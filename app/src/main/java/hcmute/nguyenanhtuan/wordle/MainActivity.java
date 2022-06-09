@@ -128,9 +128,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        // signout user
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(this, LoginActivity.class));
+        if(mAuth.getCurrentUser() != null) {
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }
     }
     private void dataInit(){
         // get Word data

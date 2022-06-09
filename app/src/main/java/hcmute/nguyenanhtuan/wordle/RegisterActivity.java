@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -120,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         // if user is created successfully
                         if (task.isSuccessful()){
                             // init new User
-                            User user = new User(str_fullName, str_email, str_password, str_age);
+                            User user = new User(str_fullName, str_email, str_password, str_age, 0, 0, 0);
 
                             // also add user to realtime database
                             FirebaseDatabase.getInstance().getReference("Users")
@@ -128,9 +131,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    // is user is added
+                                    // if user is added
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, "Account created! Please verify your email!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(RegisterActivity.this, "Account created successfully", Toast.LENGTH_LONG).show();
                                     }
                                     else{
                                         Toast.makeText(RegisterActivity.this, "Register failed, please try again!", Toast.LENGTH_LONG).show();
@@ -146,23 +149,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         progressBar.setVisibility(View.GONE);
                     }
                 });
-
-        // handle sending verification email
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    // NOTE: this Activity should get onpen only when the user is not signed in, otherwise
-                    // the user will receive another verification email.
-                    sendVerificationEmail();
-                } else {
-                    // User is signed out
-
-                }
-            }
-        };
 
     }
     // button-onclick logic
