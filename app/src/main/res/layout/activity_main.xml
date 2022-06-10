@@ -1082,17 +1082,15 @@
         android:id="@+id/btn_statistics"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="4dp"
 
         android:backgroundTint="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/tv_ingameBanner"
+
+        app:layout_constraintEnd_toStartOf="@id/btn_replay"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/actionModePasteDrawable" />
+        app:srcCompat="@android:drawable/ic_menu_info_details" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/btn_menu"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="4dp"
@@ -1104,5 +1102,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+
+    <ImageButton
+        android:id="@+id/btn_replay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:backgroundTint="@color/black"
+
+        app:srcCompat="@android:drawable/ic_menu_rotate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/btn_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:backgroundTint="@color/black"
+
+        app:layout_constraintStart_toEndOf="@id/btn_menu"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_help" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

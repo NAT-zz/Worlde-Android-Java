@@ -22,4 +22,22 @@
     <style name="Theme.Wordle.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Wordle.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="not_in_word_list">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#fff</item>
+
+        <item name="stTextSize">20sp</item>
+        <item name="stColorBackground">#FFEB3B</item>
+        <item name="stSolidBackground">true</item>
+
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#000000</item>
+
+        <item name="stIconStart">@drawable/ic_baseline_cancel_24</item>
+
+        <item name="stLength">LONG</item> LONG or SHORT
+        <item name="stGravity">center</item> top or center
+        <item name="stRadius">3dp</item>
+    </style>
 </resources>

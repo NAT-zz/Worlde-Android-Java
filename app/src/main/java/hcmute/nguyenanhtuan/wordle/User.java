@@ -9,19 +9,21 @@ public class User {
 
     // user's data statistics
     private int played;
-    private int winRate;
-    private int maxStreak;
+    private int winCount;
+    private int looseCount;
+    private int currentStreak;
 
     public User(){}
 
-    public User(String name, String email, String password, String age, int played, int winRate, int maxStreak) {
+    public User(String name, String email, String password, String age, int played, int winCount, int looseCount, int currentStreak) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.age = age;
         this.played = played;
-        this.winRate = winRate;
-        this.maxStreak = maxStreak;
+        this.winCount = winCount;
+        this.looseCount = looseCount;
+        this.currentStreak = currentStreak;
     }
 
     public String getName() {
@@ -64,19 +66,27 @@ public class User {
         this.played = played;
     }
 
-    public int getWinRate() {
-        return winRate;
+    public int getWinCount() {
+        return winCount;
     }
 
-    public void setWinRate(int winRate) {
-        this.winRate = winRate;
+    public void setWinCount(int winCount) {
+        this.winCount = winCount;
     }
 
-    public int getMaxStreak() {
-        return maxStreak;
+    public int getLooseCount() {
+        return looseCount;
     }
 
-    public void setMaxStreak(int maxStreak) {
-        this.maxStreak = maxStreak;
+    public void setLooseCount(int looseCount) {
+        this.looseCount = looseCount;
+    }
+
+    public int getCurrentStreak() {
+        return currentStreak;
+    }
+
+    public void setCurrentStreak(int currentStreak) {
+        this.currentStreak = currentStreak;
     }
 }

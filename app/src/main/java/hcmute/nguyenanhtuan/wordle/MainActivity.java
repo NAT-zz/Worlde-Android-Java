@@ -3,13 +3,17 @@ package hcmute.nguyenanhtuan.wordle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +27,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
     int col_count = 1;
 
     // view
-    TextView enter;
-    TextView delete;
+    TextView enter, delete;
+    Dialog dialog;
+    ImageButton statistic, replay, help;
 
     // Key
     String[] keyArray = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
@@ -48,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
     // firebase authentication
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private String userID;
+
+    //user
+    User thisUser;
 
     // word in a row
     String preWord="";
@@ -61,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        enter = (TextView) findViewById(R.id.tv_enter);
-        delete = (TextView) findViewById(R.id.tv_del);
-
+        mapping();
         dataInit();
 
         // keys on click
@@ -83,7 +94,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
+        // statistic-onclick logic
+        statistic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopUp(null);
+            }
+        });
+        replay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recreate();
+            }
+        });
+        // enter-onclick logic
         enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     if (result == 0) {
                         Toast.makeText(MainActivity.this, "Not in word list", Toast.LENGTH_SHORT).show();
+                        StyleableToast.makeText(MainActivity.this, "Not in word list", Toast.LENGTH_LONG, R.style.not_in_word_list).show();
                     }
                     else if (result == 1){
                         Toast.makeText(MainActivity.this, "You Win", Toast.LENGTH_SHORT).show();
@@ -125,13 +150,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void mapping(){
+        enter = (TextView) findViewById(R.id.tv_enter);
+        delete = (TextView) findViewById(R.id.tv_del);
+
+        statistic = (ImageButton) findViewById(R.id.btn_statistics);
+        replay = (ImageButton) findViewById(R.id.btn_replay);
+        help = (ImageButton) findViewById(R.id.btn_help);
+    }
     @Override
     protected void onStart() {
         super.onStart();
-        if(mAuth.getCurrentUser() != null) {
-            FirebaseAuth.getInstance().signOut();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
+        if (currentUser==null) {
             finish();
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        else{
+            userID = currentUser.getUid();
+            Log.d("user", currentUser.getEmail());
+
+            // get users collection
+            databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+            databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    thisUser = snapshot.getValue(User.class);
+                    if (thisUser == null){
+                        Log.d("error", "getting error");
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
     }
     private void dataInit(){
@@ -215,6 +270,37 @@ public class MainActivity extends AppCompatActivity {
                 return 2;
             }
         }
+    }
+    // show the statistic popup
+    private void showPopUp(View v) {
+        // init dialog
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custompopup);
+
+        // mapping
+        TextView close = (TextView) dialog.findViewById(R.id.tv_close);;
+        TextView played = (TextView) dialog.findViewById(R.id.tv_playednum);
+        TextView win = (TextView) dialog.findViewById(R.id.tv_winnum);
+        TextView loose = (TextView) dialog.findViewById(R.id.tv_loosenum);
+        TextView streak = (TextView) dialog.findViewById(R.id.tv_streaknum);
+
+        // show user record
+        played.setText(((java.lang.Integer) thisUser.getPlayed()));
+        win.setText(((java.lang.Integer) thisUser.getWinCount()));
+        loose.setText(((java.lang.Integer) thisUser.getLooseCount()));
+        streak.setText(((java.lang.Integer) thisUser.getCurrentStreak()));
+
+        // close-onclick logic
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        // make border transparent
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // show the dialog
+        dialog.show();
     }
     // key-onclick logic
     private void keyOnclick(String x){

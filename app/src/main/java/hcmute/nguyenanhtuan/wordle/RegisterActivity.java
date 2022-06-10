@@ -123,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         // if user is created successfully
                         if (task.isSuccessful()){
                             // init new User
-                            User user = new User(str_fullName, str_email, str_password, str_age, 0, 0, 0);
+                            User user = new User(str_fullName, str_email, str_password, str_age, 0, 0, 0, 0);
 
                             // also add user to realtime database
                             FirebaseDatabase.getInstance().getReference("Users")

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="475dp"
+    android:background="#323232"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/tv_close"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/white"
+        android:text="X"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/circlebackground"/>
+
+    <TextView
+        android:id="@+id/tv_statistics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="STATISTICS"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:textAlignment="center" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_playednum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="28dp"
+
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="45dp"
+            android:textStyle="bold"
+
+            app:layout_constraintEnd_toStartOf="@id/tv_winnum"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_winnum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="45dp"
+            android:textStyle="bold"
+
+            app:layout_constraintEnd_toStartOf="@+id/tv_loosenum"
+            app:layout_constraintStart_toEndOf="@+id/tv_playednum"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_loosenum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="45dp"
+            android:textStyle="bold"
+
+            app:layout_constraintEnd_toStartOf="@id/tv_streaknum"
+            app:layout_constraintStart_toEndOf="@id/tv_winnum"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_streaknum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="40dp"
+
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="45dp"
+            android:textStyle="bold"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_loosenum"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_played"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+
+            android:text="Played"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_playednum" />
+
+        <TextView
+            android:id="@+id/tv_win"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+
+            android:text="Win"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+
+            app:layout_constraintEnd_toStartOf="@id/tv_loose"
+            app:layout_constraintStart_toEndOf="@id/tv_played"
+            app:layout_constraintTop_toBottomOf="@id/tv_winnum" />
+
+        <TextView
+            android:id="@+id/tv_loose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+
+            android:text="Loose"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+
+            app:layout_constraintEnd_toStartOf="@id/tv_streak"
+            app:layout_constraintStart_toEndOf="@id/tv_win"
+            app:layout_constraintTop_toBottomOf="@id/tv_loosenum" />
+
+        <TextView
+            android:id="@+id/tv_streak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+
+            android:text="Current\nStreak"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_loose"
+            app:layout_constraintTop_toBottomOf="@id/tv_streaknum" />
+
+        <TextView
+            android:id="@+id/tv_guessBanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="140dp"
+            android:text="GUESS DISTRIBUTION"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

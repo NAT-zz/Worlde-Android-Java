@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         register.setOnClickListener(this);
         login.setOnClickListener(this);
+        forgotPassword.setOnClickListener(this);
     }
     // map elements with ids
     private void mapping(){
@@ -57,7 +58,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password = (EditText) findViewById(R.id.et_passwordlogin);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar2);
-
     }
     private void userLogin() {
         // get field value
@@ -98,20 +98,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 // if validation is successful
                 if (task.isSuccessful()){
                     // for testing
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful())
-                                Log.d("Flag", "Email verification sent");
-                            else
-                                Log.d("Flag", "Email verification not sent");
-                        }
-                    });
+//                    FirebaseUser user = mAuth.getCurrentUser();
+//                    user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if (task.isSuccessful())
+//                                Log.d("Flag", "Email verification sent");
+//                            else
+//                                Log.d("Flag", "Email verification not sent");
+//                        }
+//                    });
                     // to game
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login failed! Please recheck your credentials", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Login failed! Please check your infomation again", Toast.LENGTH_LONG).show();
                 }
                 progressBar.setVisibility(View.GONE);
             }
@@ -129,7 +129,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_login:
                 userLogin();
                 break;
-
+            case R.id.tv_forgotpassword:
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
+                break;
         }
     }
 }
