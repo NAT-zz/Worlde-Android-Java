@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     // view
     TextView enter, delete;
-    Dialog dialog;
+    Dialog dialog, dialogHelp;
     ImageButton statistic, replay, help;
 
     // Key
@@ -94,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        // helper-onclick logic
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHelper(null);
+            }
+        });
         // statistic-onclick logic
         statistic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,21 +125,24 @@ public class MainActivity extends AppCompatActivity {
                 if (col_count == 6)
                 {
                     if (result == 0) {
-                        Toast.makeText(MainActivity.this, "Not in word list", Toast.LENGTH_SHORT).show();
                         StyleableToast.makeText(MainActivity.this, "Not in word list", Toast.LENGTH_LONG, R.style.not_in_word_list).show();
                     }
                     else if (result == 1){
-                        Toast.makeText(MainActivity.this, "You Win", Toast.LENGTH_SHORT).show();
+                        if (row_count < 5)
+                            StyleableToast.makeText(MainActivity.this, "FANSTACTIC", Toast.LENGTH_LONG, R.style.you_win).show();
+                        else
+                            StyleableToast.makeText(MainActivity.this, "PHEW", Toast.LENGTH_LONG, R.style.you_win).show();
                     }
                     else if (result == 2) {
                         if (row_count != 6)
                             row_count++;
-                        else
-                            Toast.makeText(MainActivity.this, "You failed", Toast.LENGTH_SHORT).show();
+                        else {
+                            StyleableToast.makeText(MainActivity.this, trueWord, Toast.LENGTH_LONG, R.style.the_word).show();
+                        }
                         col_count = 1;
                     }
                 }
-                else Toast.makeText(MainActivity.this, "Finish the word", Toast.LENGTH_SHORT).show();
+                else StyleableToast.makeText(MainActivity.this, "Finish the word", Toast.LENGTH_LONG, R.style.finish_the_word).show();
             }
         });
         // delete-onclick logic
@@ -270,6 +280,27 @@ public class MainActivity extends AppCompatActivity {
                 return 2;
             }
         }
+    }
+    // show the helper popup
+    private void showHelper(View v){
+        // init dialog helper
+        dialogHelp = new Dialog(this);
+        dialogHelp.setContentView(R.layout.customhelper);
+
+        // mapping
+        TextView closeHelper = (TextView) dialogHelp.findViewById(R.id.tv_closehelper);
+
+        // closehelper-onclick logic
+        closeHelper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogHelp.dismiss();
+            }
+        });
+        // make border transparent
+        dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // show the helper dialge
+        dialogHelp.show();
     }
     // show the statistic popup
     private void showPopUp(View v) {

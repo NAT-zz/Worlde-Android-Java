@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/back_word"
     tools:context=".MainActivity">
 
     <!--Row 1-->
@@ -548,7 +548,7 @@
         android:layout_height="45dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="Enter"
@@ -566,7 +566,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="X"
@@ -583,7 +583,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="S"
@@ -601,7 +601,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="D"
@@ -619,7 +619,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="V"
@@ -635,7 +635,7 @@
         android:id="@+id/tv_Y"
         android:layout_width="37dp"
         android:layout_height="45dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="Y"
@@ -652,7 +652,7 @@
         android:id="@+id/tv_T"
         android:layout_width="37dp"
         android:layout_height="45dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="T"
@@ -669,7 +669,7 @@
         android:id="@+id/tv_I"
         android:layout_width="37dp"
         android:layout_height="45dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="I"
@@ -686,7 +686,7 @@
         android:id="@+id/tv_O"
         android:layout_width="37dp"
         android:layout_height="45dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="O"
@@ -705,7 +705,7 @@
         android:layout_height="45dp"
         android:layout_marginLeft="28dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="A"
@@ -723,7 +723,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="H"
@@ -741,7 +741,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="B"
@@ -758,7 +758,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="K"
@@ -775,7 +775,7 @@
         android:id="@+id/tv_W"
         android:layout_width="37dp"
         android:layout_height="45dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="W"
@@ -794,7 +794,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="DEL"
@@ -810,7 +810,7 @@
         android:id="@+id/tv_R"
         android:layout_width="37dp"
         android:layout_height="45dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="R"
@@ -828,7 +828,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="Q"
@@ -847,7 +847,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="J"
@@ -865,7 +865,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="M"
@@ -881,7 +881,7 @@
         android:id="@+id/tv_E"
         android:layout_width="37dp"
         android:layout_height="45dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="E"
@@ -898,7 +898,7 @@
         android:id="@+id/tv_U"
         android:layout_width="37dp"
         android:layout_height="45dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="U"
@@ -916,7 +916,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="P"
@@ -934,7 +934,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="N"
@@ -951,7 +951,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="C"
@@ -969,7 +969,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
         android:layout_marginRight="28dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="L"
@@ -987,7 +987,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="F"
@@ -1005,7 +1005,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="G"
@@ -1023,7 +1023,7 @@
         android:layout_width="37dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/back_key"
+        android:background="@drawable/back_word"
 
         android:gravity="center"
         android:text="Z"
@@ -1083,7 +1083,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
 
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@drawable/back_word"
 
         app:layout_constraintEnd_toStartOf="@id/btn_replay"
         app:layout_constraintTop_toTopOf="parent"
@@ -1095,7 +1095,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="4dp"
 
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@drawable/back_word"
 
         app:layout_constraintEnd_toStartOf="@+id/tv_ingameBanner"
         app:layout_constraintHorizontal_bias="0.0"
@@ -1108,7 +1108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@drawable/back_word"
 
         app:srcCompat="@android:drawable/ic_menu_rotate"
         app:layout_constraintEnd_toEndOf="parent"
@@ -1119,7 +1119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@drawable/back_word"
 
         app:layout_constraintStart_toEndOf="@id/btn_menu"
         app:layout_constraintTop_toTopOf="parent"
