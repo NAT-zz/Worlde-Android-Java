@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     //user
     User thisUser;
+    Record thisRecord;
 
     // word in a row
     String preWord="";
@@ -316,10 +317,10 @@ public class MainActivity extends AppCompatActivity {
         TextView streak = (TextView) dialog.findViewById(R.id.tv_streaknum);
 
         // show user record
-        played.setText(((java.lang.Integer) thisUser.getPlayed()));
-        win.setText(((java.lang.Integer) thisUser.getWinCount()));
-        loose.setText(((java.lang.Integer) thisUser.getLooseCount()));
-        streak.setText(((java.lang.Integer) thisUser.getCurrentStreak()));
+        played.setText(String.valueOf(thisUser.getRecord().getPlayed()));
+        loose.setText(String.valueOf(thisUser.getRecord().getLooseCount()));
+        win.setText(String.valueOf(thisUser.getRecord().getWinCount()));
+        streak.setText(String.valueOf(thisUser.getRecord().getCurrentStreak()));
 
         // close-onclick logic
         close.setOnClickListener(new View.OnClickListener() {

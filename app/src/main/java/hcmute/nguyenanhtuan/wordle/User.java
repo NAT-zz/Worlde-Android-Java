@@ -7,23 +7,16 @@ public class User {
     private String password;
     private String age;
 
-    // user's data statistics
-    private int played;
-    private int winCount;
-    private int looseCount;
-    private int currentStreak;
+    private Record record;
 
     public User(){}
 
-    public User(String name, String email, String password, String age, int played, int winCount, int looseCount, int currentStreak) {
+    public User(String name, String email, String password, String age, Record record) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.age = age;
-        this.played = played;
-        this.winCount = winCount;
-        this.looseCount = looseCount;
-        this.currentStreak = currentStreak;
+        this.record = record;
     }
 
     public String getName() {
@@ -58,35 +51,11 @@ public class User {
         this.age = age;
     }
 
-    public int getPlayed() {
-        return played;
+    public Record getRecord() {
+        return record;
     }
 
-    public void setPlayed(int played) {
-        this.played = played;
-    }
-
-    public int getWinCount() {
-        return winCount;
-    }
-
-    public void setWinCount(int winCount) {
-        this.winCount = winCount;
-    }
-
-    public int getLooseCount() {
-        return looseCount;
-    }
-
-    public void setLooseCount(int looseCount) {
-        this.looseCount = looseCount;
-    }
-
-    public int getCurrentStreak() {
-        return currentStreak;
-    }
-
-    public void setCurrentStreak(int currentStreak) {
-        this.currentStreak = currentStreak;
+    public void setRecord(Record record) {
+        this.record = record;
     }
 }
