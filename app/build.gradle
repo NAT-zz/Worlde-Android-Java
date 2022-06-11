@@ -47,6 +47,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'io.github.muddz:styleabletoast:2.4.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation 'com.google.firebase:firebase-auth'

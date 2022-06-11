@@ -123,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         // if user is created successfully
                         if (task.isSuccessful()){
                             // init new User
-                            Record record = new Record(0,0,0,0,0,0,0,0);
+                            Record record = new Record(0,0,0,0,0,0,0,0,0,0);
                             User user = new User(str_fullName, str_email, str_password, str_age, record);
 
                             // also add user to realtime database

@@ -11,10 +11,12 @@ public class Record {
     private int secondWin;
     private int thirdWin;
     private int fourthWin;
+    private int fifthWin;
+    private int sixthWin;
 
     public Record() {}
 
-    public Record(int played, int winCount, int looseCount, int currentStreak, int firstWin, int secondWin, int thirdWin, int fourthWin) {
+    public Record(int played, int winCount, int looseCount, int currentStreak, int firstWin, int secondWin, int thirdWin, int fourthWin, int fifthWin, int sixthWin) {
         this.played = played;
         this.winCount = winCount;
         this.looseCount = looseCount;
@@ -23,6 +25,8 @@ public class Record {
         this.secondWin = secondWin;
         this.thirdWin = thirdWin;
         this.fourthWin = fourthWin;
+        this.fifthWin = fifthWin;
+        this.sixthWin = sixthWin;
     }
 
     public int getPlayed() {
@@ -87,5 +91,21 @@ public class Record {
 
     public void setFourthWin(int fourthWin) {
         this.fourthWin = fourthWin;
+    }
+
+    public int getFifthWin() {
+        return fifthWin;
+    }
+
+    public void setFifthWin(int fifthWin) {
+        this.fifthWin = fifthWin;
+    }
+
+    public int getSixthWin() {
+        return sixthWin;
+    }
+
+    public void setSixthWin(int sixthWin) {
+        this.sixthWin = sixthWin;
     }
 }

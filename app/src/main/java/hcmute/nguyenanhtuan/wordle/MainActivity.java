@@ -17,6 +17,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     //user
     User thisUser;
-    Record thisRecord;
 
     // word in a row
     String preWord="";
@@ -133,12 +137,35 @@ public class MainActivity extends AppCompatActivity {
                             StyleableToast.makeText(MainActivity.this, "FANSTACTIC", Toast.LENGTH_LONG, R.style.you_win).show();
                         else
                             StyleableToast.makeText(MainActivity.this, "PHEW", Toast.LENGTH_LONG, R.style.you_win).show();
+
+                        if(row_count == 1)
+                            thisUser.getRecord().setFirstWin(thisUser.getRecord().getFirstWin()+1);
+                        else if (row_count == 2)
+                            thisUser.getRecord().setSecondWin(thisUser.getRecord().getSecondWin()+1);
+                        else if (row_count == 3)
+                            thisUser.getRecord().setThirdWin(thisUser.getRecord().getThirdWin()+1);
+                        else if (row_count == 4)
+                            thisUser.getRecord().setFourthWin(thisUser.getRecord().getFourthWin()+1);
+                        else if (row_count == 5)
+                            thisUser.getRecord().setFifthWin(thisUser.getRecord().getFifthWin()+1);
+                        else
+                            thisUser.getRecord().setSixthWin(thisUser.getRecord().getSixthWin()+1);
+
+                        thisUser.getRecord().setPlayed(thisUser.getRecord().getPlayed()+1);
+                        thisUser.getRecord().setCurrentStreak(thisUser.getRecord().getCurrentStreak()+1);
+                        thisUser.getRecord().setWinCount(thisUser.getRecord().getWinCount()+1);
+                        updateRecord();
                     }
                     else if (result == 2) {
                         if (row_count != 6)
                             row_count++;
                         else {
                             StyleableToast.makeText(MainActivity.this, trueWord, Toast.LENGTH_LONG, R.style.the_word).show();
+
+                            thisUser.getRecord().setPlayed(thisUser.getRecord().getPlayed()+1);
+                            thisUser.getRecord().setCurrentStreak(0);
+                            thisUser.getRecord().setLooseCount(thisUser.getRecord().getLooseCount()+1);
+                            updateRecord();
                         }
                         col_count = 1;
                     }
@@ -282,6 +309,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    // update user record
+    private void updateRecord(){
+        databaseReference = db.getReference("User");
+
+        databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("record")
+                .setValue(thisUser.getRecord());
+    }
     // show the helper popup
     private void showHelper(View v){
         // init dialog helper
@@ -303,6 +337,51 @@ public class MainActivity extends AppCompatActivity {
         // show the helper dialge
         dialogHelp.show();
     }
+    // set data for pie chart
+    private void pieChartData(){
+        // mapping piechart
+        PieChart pieChart = findViewById(R.id.piechart);
+        // set value for pie chart
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        // get total guess
+        int totalGuess = thisUser.getRecord().getFirstWin() + thisUser.getRecord().getSecondWin()
+                + thisUser.getRecord().getThirdWin() + thisUser.getRecord().getFourthWin()
+                + thisUser.getRecord().getFifthWin() + thisUser.getRecord().getSixthWin();
+
+        float first = ((float) (thisUser.getRecord().getFirstWin()/totalGuess)) * 100;
+        float second = ((float) (thisUser.getRecord().getSecondWin()/totalGuess)) * 100;
+        float third = ((float) (thisUser.getRecord().getThirdWin()/totalGuess)) * 100;
+        float fourth = ((float) (thisUser.getRecord().getFourthWin()/totalGuess)) * 100;
+        float fifth = ((float) (thisUser.getRecord().getFifthWin()/totalGuess)) * 100;
+        float sixth = ((float) (thisUser.getRecord().getSixthWin()/totalGuess)) * 100;
+
+        // init pie chart entry
+        PieEntry pieEntry = new PieEntry(1, first);
+        // add values in array list
+        pieEntries.add(pieEntry);
+
+        pieEntry = new PieEntry(2, second);
+        pieEntries.add(pieEntry);
+        pieEntry = new PieEntry(3, third);
+        pieEntries.add(pieEntry);
+        pieEntry = new PieEntry(4, fourth);
+        pieEntries.add(pieEntry);
+        pieEntry = new PieEntry(5, fifth);
+        pieEntries.add(pieEntry);
+        pieEntry = new PieEntry(6, sixth);
+        pieEntries.add(pieEntry);
+
+        // init pie data set
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Guess count");
+        // set colors
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        // set pie data
+        pieChart.setData(new PieData(pieDataSet));
+        // set animation
+        pieChart.animateXY(2000, 2000);
+        // hide description
+        // pieChart.getDescription().setEnabled(false);
+    }
     // show the statistic popup
     private void showPopUp(View v) {
         // init dialog
@@ -321,6 +400,7 @@ public class MainActivity extends AppCompatActivity {
         loose.setText(String.valueOf(thisUser.getRecord().getLooseCount()));
         win.setText(String.valueOf(thisUser.getRecord().getWinCount()));
         streak.setText(String.valueOf(thisUser.getRecord().getCurrentStreak()));
+        pieChartData();
 
         // close-onclick logic
         close.setOnClickListener(new View.OnClickListener() {
