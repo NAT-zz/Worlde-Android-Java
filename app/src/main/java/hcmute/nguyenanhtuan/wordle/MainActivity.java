@@ -9,6 +9,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     // view
     TextView enter, delete;
-    Dialog dialog, dialogHelp;
-    ImageButton statistic, replay, help;
+    Dialog dialog, dialogHelp, dialogMenu;
+    ImageButton statistic, replay, help, menu;
 
     // Key
     String[] keyArray = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
@@ -99,6 +100,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        // menu-onclick logic
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMenu(null);
+            }
+        });
         // helper-onclick logic
         help.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 showPopUp(null);
             }
         });
+        // replay-onclick logic
         replay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -192,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
         enter = (TextView) findViewById(R.id.tv_enter);
         delete = (TextView) findViewById(R.id.tv_del);
 
+        menu = (ImageButton) findViewById(R.id.btn_menu);
         statistic = (ImageButton) findViewById(R.id.btn_statistics);
         replay = (ImageButton) findViewById(R.id.btn_replay);
         help = (ImageButton) findViewById(R.id.btn_help);
@@ -315,6 +325,52 @@ public class MainActivity extends AppCompatActivity {
 
         databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("record")
                 .setValue(thisUser.getRecord());
+    }
+    // show the menu popup
+    private void showMenu(View v) {
+        // init dialog menu
+        dialogMenu = new Dialog(this);
+        dialogMenu.setContentView(R.layout.custommenu);
+
+        // mapping
+        TextView closeHelper = (TextView) dialogMenu.findViewById(R.id.tv_closehelper);
+        Button cont = (Button) dialogMenu.findViewById(R.id.btn_cont);
+        Button score = (Button) dialogMenu.findViewById(R.id.btn_score);
+        Button saved = (Button) dialogMenu.findViewById(R.id.btn_saved);
+        Button newMode = (Button) dialogMenu.findViewById(R.id.btn_newMode);
+        Button logOut = (Button) dialogMenu.findViewById(R.id.btn_logout);
+
+        // closemenu-onclick logic
+        closeHelper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogMenu.dismiss();
+            }
+        });
+        // continue-onclick logic
+        cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogMenu.dismiss();
+            }
+        });
+        // logout-onclick logic
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                dialogMenu.dismiss();
+
+                finish();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+
+
+        // make border transparent
+        dialogMenu.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // show the helper dialge
+        dialogMenu.show();
     }
     // show the helper popup
     private void showHelper(View v){
