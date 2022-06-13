@@ -1,5 +1,6 @@
 package hcmute.nguyenanhtuan.wordle;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -333,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
         dialogMenu.setContentView(R.layout.custommenu);
 
         // mapping
-        TextView closeHelper = (TextView) dialogMenu.findViewById(R.id.tv_closehelper);
+        TextView closeMenu = (TextView) dialogMenu.findViewById(R.id.tv_closemenu);
         Button cont = (Button) dialogMenu.findViewById(R.id.btn_cont);
         Button score = (Button) dialogMenu.findViewById(R.id.btn_score);
         Button saved = (Button) dialogMenu.findViewById(R.id.btn_saved);
@@ -341,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
         Button logOut = (Button) dialogMenu.findViewById(R.id.btn_logout);
 
         // closemenu-onclick logic
-        closeHelper.setOnClickListener(new View.OnClickListener() {
+        closeMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogMenu.dismiss();
@@ -396,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
     // set data for pie chart
     private void pieChartData(){
         // mapping piechart
-        PieChart pieChart = findViewById(R.id.piechart);
+        PieChart pieChart = dialog.findViewById(R.id.piechart);
         // set value for pie chart
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
         // get total guess
@@ -404,39 +405,45 @@ public class MainActivity extends AppCompatActivity {
                 + thisUser.getRecord().getThirdWin() + thisUser.getRecord().getFourthWin()
                 + thisUser.getRecord().getFifthWin() + thisUser.getRecord().getSixthWin();
 
-        float first = ((float) (thisUser.getRecord().getFirstWin()/totalGuess)) * 100;
-        float second = ((float) (thisUser.getRecord().getSecondWin()/totalGuess)) * 100;
-        float third = ((float) (thisUser.getRecord().getThirdWin()/totalGuess)) * 100;
-        float fourth = ((float) (thisUser.getRecord().getFourthWin()/totalGuess)) * 100;
-        float fifth = ((float) (thisUser.getRecord().getFifthWin()/totalGuess)) * 100;
-        float sixth = ((float) (thisUser.getRecord().getSixthWin()/totalGuess)) * 100;
+        float first = (thisUser.getRecord().getFirstWin()/ (float) totalGuess) * 100;
+        float second = (thisUser.getRecord().getSecondWin()/ (float) totalGuess) * 100;
+        float third = (thisUser.getRecord().getThirdWin()/ (float) totalGuess) * 100;
+        float fourth = (thisUser.getRecord().getFourthWin()/ (float) totalGuess) * 100;
+        float fifth = (thisUser.getRecord().getFifthWin()/ (float) totalGuess) * 100;
+        float sixth = (thisUser.getRecord().getSixthWin()/ (float) totalGuess) * 100;
 
         // init pie chart entry
-        PieEntry pieEntry = new PieEntry(1, first);
+        PieEntry pieEntry = new PieEntry(first, "First");
         // add values in array list
         pieEntries.add(pieEntry);
 
-        pieEntry = new PieEntry(2, second);
+        pieEntry = new PieEntry(second, "Second");
         pieEntries.add(pieEntry);
-        pieEntry = new PieEntry(3, third);
+        pieEntry = new PieEntry(third, "Third");
         pieEntries.add(pieEntry);
-        pieEntry = new PieEntry(4, fourth);
+        pieEntry = new PieEntry(fourth, "Fourth");
         pieEntries.add(pieEntry);
-        pieEntry = new PieEntry(5, fifth);
+        pieEntry = new PieEntry(fifth, "Fifth");
         pieEntries.add(pieEntry);
-        pieEntry = new PieEntry(6, sixth);
+        pieEntry = new PieEntry(sixth, "Sixth");
         pieEntries.add(pieEntry);
 
+        Log.d("pie entries", pieEntries.toString());
         // init pie data set
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Guess count");
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Guess");
         // set colors
-        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setColors( Color.rgb(193, 37, 82),
+                            Color.rgb(255, 102, 0),
+                            Color.rgb(245, 199, 0),
+                            Color.rgb(106, 150, 31),
+                            Color.rgb(179, 100, 53),
+                            Color.rgb(219, 9, 198));
         // set pie data
         pieChart.setData(new PieData(pieDataSet));
         // set animation
         pieChart.animateXY(2000, 2000);
         // hide description
-        // pieChart.getDescription().setEnabled(false);
+        pieChart.getDescription().setTextColor(R.color.white);
     }
     // show the statistic popup
     private void showPopUp(View v) {

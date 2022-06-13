@@ -10,7 +10,7 @@
     android:layout_gravity="center">
 
     <TextView
-        android:id="@+id/tv_close"
+        android:id="@+id/tv_closemenu"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:textColor="@color/white"
@@ -61,17 +61,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_cont"/>
 
-        <Button
-            android:id="@+id/btn_saved"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="words played"
-            android:textColor="@color/black"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_score"/>
 
         <Button
             android:id="@+id/btn_newMode"
@@ -83,7 +72,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_saved"/>
+            app:layout_constraintTop_toBottomOf="@id/btn_score"/>
 
 
         <Button

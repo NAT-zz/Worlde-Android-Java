@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     Toast.makeText(LoginActivity.this, "Login failed! Please check your infomation again", Toast.LENGTH_LONG).show();
                 }
-                progressBar.setVisibility(View.GONE);
+//                progressBar.setVisibility(View.GONE);
             }
         });
 
