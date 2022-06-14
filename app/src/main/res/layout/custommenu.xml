@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="360dp"
     android:layout_height="485dp"
-    android:background="#323232"
+    android:background="@drawable/gradient_1"
     android:padding="5dp"
     android:layout_gravity="center">
 

@@ -7,21 +7,32 @@
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/back_key.xml" value="0.212" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/back_word.xml" value="0.212" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/circlebackground.xml" value="0.173" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/gradient_1.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/gradient_2.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/gradient_3.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/gradient_4.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/gradient_5.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/gradient_6.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/gradient_7.xml" value="0.1535" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/gradient_8.xml" value="0.1535" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/ic_baseline_cancel_24.xml" value="0.173" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/ic_baseline_check_circle_outline_24.xml" value="0.173" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.173" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/drawable/snow_bg.xml" value="0.1535" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.22109375" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout-w936dp/activity_login.xml" value="0.15703125" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/activity_forgot_password.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/activity_score_board.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/content_register.xml" value="0.209375" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/customhelper.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/custommenu.xml" value="0.25" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/custompopup.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/fragment_first.xml" value="0.209375" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/fragment_second.xml" value="0.209375" />
+        <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/score_item_layout.xml" value="0.209375" />
         <entry key="..\:/AndroidStudioProjects/wordle/app/src/main/res/layout/scoreboard.xml" value="0.209375" />
       </map>
     </option>

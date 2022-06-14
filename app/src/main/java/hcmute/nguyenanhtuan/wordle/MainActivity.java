@@ -337,10 +337,17 @@ public class MainActivity extends AppCompatActivity {
         TextView closeMenu = (TextView) dialogMenu.findViewById(R.id.tv_closemenu);
         Button cont = (Button) dialogMenu.findViewById(R.id.btn_cont);
         Button score = (Button) dialogMenu.findViewById(R.id.btn_score);
-        Button saved = (Button) dialogMenu.findViewById(R.id.btn_saved);
+//        Button saved = (Button) dialogMenu.findViewById(R.id.btn_saved);
         Button newMode = (Button) dialogMenu.findViewById(R.id.btn_newMode);
         Button logOut = (Button) dialogMenu.findViewById(R.id.btn_logout);
 
+        // scoreboard-onclick logic
+        score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ScoreBoardActivity.class));
+            }
+        });
         // closemenu-onclick logic
         closeMenu.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,4 +12,7 @@
     <color name="yellow">#FAE52E</color>
     <color name="default_key">#576058</color>
     <color name="birghter_dark">#333131</color>
+
+    <color name = "bg_color">#040507</color>
+    <color name = "bg_card_color">#423F5B</color>
 </resources>
