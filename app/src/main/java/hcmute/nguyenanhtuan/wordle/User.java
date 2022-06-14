@@ -8,6 +8,7 @@ public class User {
     private String age;
 
     private Record record;
+    private Float score;
 
     public User(){}
 
@@ -57,5 +58,12 @@ public class User {
 
     public void setRecord(Record record) {
         this.record = record;
+    }
+
+    public void setScore(){
+        this.score = (this.getRecord().getWinCount() / (float) this.getRecord().getPlayed()) * 100;
+    }
+    public Float getScore() {
+        return score;
     }
 }

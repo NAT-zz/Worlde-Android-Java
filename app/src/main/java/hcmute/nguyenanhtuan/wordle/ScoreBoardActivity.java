@@ -21,6 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 public class ScoreBoardActivity extends AppCompatActivity {
@@ -39,8 +42,12 @@ public class ScoreBoardActivity extends AppCompatActivity {
         ListView leaderBoard = (ListView) findViewById(R.id.lv_listview);
 
         getUserData();
-        Log.d("users", users.toString());
-//        sortUser();
+        Collections.sort(users, new Comparator<User>() {
+            @Override
+            public int compare(User user, User t1) {
+                return user.getScore().compareTo(t1.getScore());
+            }
+        });
 
         ScoreBoardAdapter adapter = new ScoreBoardAdapter(this, users);
         animation = AnimationUtils.loadAnimation(this, R.anim.animation1);
@@ -54,19 +61,17 @@ public class ScoreBoardActivity extends AppCompatActivity {
         });
 
     }
-
     private void getUserData() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                        Log.d("snapshot", );
-                        User thisUser = postSnapshot.getValue(User.class);
-                        if (thisUser == null) {
-                            Log.d("error", "getting error");
-                        } else
-                            users.add(thisUser);
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        User thisUser = new User(
+                                userSnapshot.getValue(User.class).getName().toString(),
+                                null, null, null, userSnapshot.getValue(User.class).getRecord());
+                        thisUser.setScore();
+                        users.add(thisUser);
                     }
                 }
             @Override
@@ -74,8 +79,5 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
             }
         });
-    }
-    private void sortUser(){
-
     }
 }
