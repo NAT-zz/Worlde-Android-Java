@@ -11,6 +11,9 @@
         android:theme="@style/Theme.Wordle"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".NewMode1"
+            android:exported="false" />
+        <activity
             android:name=".ScoreBoardActivity"
             android:exported="false" />
         <activity

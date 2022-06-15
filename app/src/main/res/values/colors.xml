@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="red">#F61212</color>
     <color name="green">#1F922A</color>
     <color name="yellow">#FAE52E</color>
     <color name="default_key">#576058</color>

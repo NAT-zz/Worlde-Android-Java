@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class ScoreBoardAdapter extends BaseAdapter {
         animation = AnimationUtils.loadAnimation(scoreBoardActivity, R.anim.animation1);
 
         TextView userName, pos, score;
-        LinearLayout ll_bg;
+        ConstraintLayout ll_bg;
 
         // mapping
         ll_bg = view.findViewById(R.id.ll_bg);
@@ -58,7 +59,7 @@ public class ScoreBoardAdapter extends BaseAdapter {
 
         // set content
         userName.setText(users.get(i).getName().toString());
-        pos.setText(i+1);
+        pos.setText(String.valueOf(i+1));
         score.setText(users.get(i).getScore().toString());
 
         // set animation

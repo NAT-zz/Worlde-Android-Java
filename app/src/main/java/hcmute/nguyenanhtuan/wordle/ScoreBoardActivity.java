@@ -42,12 +42,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         ListView leaderBoard = (ListView) findViewById(R.id.lv_listview);
 
         getUserData();
-        Collections.sort(users, new Comparator<User>() {
-            @Override
-            public int compare(User user, User t1) {
-                return user.getScore().compareTo(t1.getScore());
-            }
-        });
+
 
         ScoreBoardAdapter adapter = new ScoreBoardAdapter(this, users);
         animation = AnimationUtils.loadAnimation(this, R.anim.animation1);
@@ -73,6 +68,12 @@ public class ScoreBoardActivity extends AppCompatActivity {
                         thisUser.setScore();
                         users.add(thisUser);
                     }
+                Collections.sort(users, new Comparator<User>() {
+                    @Override
+                    public int compare(User user, User t1) {
+                        return t1.getScore().compareTo(user.getScore());
+                    }
+                });
                 }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -61,7 +61,10 @@ public class User {
     }
 
     public void setScore(){
-        this.score = (this.getRecord().getWinCount() / (float) this.getRecord().getPlayed()) * 100;
+        if (this.getRecord().getPlayed() == 0)
+            this.score = (float) 0;
+        else
+            this.score = (this.getRecord().getWinCount() / (float) this.getRecord().getPlayed()) * 100;
     }
     public Float getScore() {
         return score;
