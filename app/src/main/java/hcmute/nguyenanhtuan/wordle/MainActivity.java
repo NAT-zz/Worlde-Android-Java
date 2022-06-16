@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
                     TextView thisBox = (TextView) findViewById(getboxID);
 
                     //get key
-                    String genkeyId =  "tv_" + preWord.substring(i, i+1);
+                    String genkeyId =  "btn_" + preWord.substring(i, i+1);
                     int getkeyId = getResources().getIdentifier(genkeyId, "id", getPackageName());
                     TextView thisKey = (TextView) findViewById(getkeyId);
 
