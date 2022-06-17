@@ -3,11 +3,16 @@ package hcmute.nguyenanhtuan.wordle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,19 +22,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
 public class NewMode1 extends AppCompatActivity {
 
-    // button
-//    Button submit;
-//    Button delete;
+    // Key
+    String[] keyArray = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
+            "A", "S", "D", "F", "G", "H", "J", "K", "L",
+            "Z", "X", "C", "V", "B", "N", "M"};
+
+    // dialog
+    Dialog dialogResult;
 
     // coordinate
-    int col_count = 1;
+    int col_count = 1, error_count = 0, score_count = 0;
 
     // answer
     String preWord = "";
@@ -52,8 +66,10 @@ public class NewMode1 extends AppCompatActivity {
         Button submit = (Button) findViewById(R.id.btn_submit);
         Button delete = (Button) findViewById(R.id.btn_del);
         ImageButton restart = (ImageButton) findViewById(R.id.btn_restart);
+        TextView scoreNum = (TextView) findViewById(R.id.tv_scorenum);
+
         dataInit();
-        getWord();
+        setUp();
 
         // keys on click
         for(int i=1;i<8;i++)
@@ -86,42 +102,26 @@ public class NewMode1 extends AppCompatActivity {
                 Log.d("preword: ", preWord);
 
                 int result = checkWordValid();
-                if (col_count == 6)
+                if (col_count == 4)
                 {
                     if (result == 0) {
-                        StyleableToast.makeText(NewMode1.this, "Not in word list", Toast.LENGTH_LONG, R.style.not_in_word_list).show();
+                        StyleableToast.makeText(NewMode1.this, "Not in word list", Toast.LENGTH_SHORT, R.style.not_in_word_list).show();
+                        handleError();
+                        makeEmptyBox();
                     }
                     else if (result == 1){
-                        StyleableToast.makeText(NewMode1.this, "NICE", Toast.LENGTH_LONG, R.style.you_win).show();
-
-//                        if(row_count == 1)
-//                            thisUser.getRecord().setFirstWin(thisUser.getRecord().getFirstWin()+1);
-//                        else if (row_count == 2)
-//                            thisUser.getRecord().setSecondWin(thisUser.getRecord().getSecondWin()+1);
-//                        else if (row_count == 3)
-//                            thisUser.getRecord().setThirdWin(thisUser.getRecord().getThirdWin()+1);
-//                        else if (row_count == 4)
-//                            thisUser.getRecord().setFourthWin(thisUser.getRecord().getFourthWin()+1);
-//                        else if (row_count == 5)
-//                            thisUser.getRecord().setFifthWin(thisUser.getRecord().getFifthWin()+1);
-//                        else
-//                            thisUser.getRecord().setSixthWin(thisUser.getRecord().getSixthWin()+1);
-//
-//                        thisUser.getRecord().setPlayed(thisUser.getRecord().getPlayed()+1);
-//                        thisUser.getRecord().setCurrentStreak(thisUser.getRecord().getCurrentStreak()+1);
-//                        thisUser.getRecord().setWinCount(thisUser.getRecord().getWinCount()+1);
-//                        updateRecord();
+                        StyleableToast.makeText(NewMode1.this, "NICE", Toast.LENGTH_SHORT, R.style.you_win).show();
+                        makeEmptyBox();
+                        clearkey();
+                        setUp();
                     }
                     else if (result == 2) {
                         col_count = 1;
-//                            thisUser.getRecord().setPlayed(thisUser.getRecord().getPlayed()+1);
-//                            thisUser.getRecord().setCurrentStreak(0);
-//                            thisUser.getRecord().setLooseCount(thisUser.getRecord().getLooseCount()+1);
-//                            updateRecord();
+                        handleError();
+                        makeEmptyBox();
                     }
                 }
-                else StyleableToast.makeText(NewMode1.this, "Finish the word", Toast.LENGTH_LONG, R.style.finish_the_word).show();
-                makeEmpty();
+                else StyleableToast.makeText(NewMode1.this, "Finish the word", Toast.LENGTH_SHORT, R.style.finish_the_word).show();
             }
         });
         // delete-onclick logic
@@ -139,7 +139,76 @@ public class NewMode1 extends AppCompatActivity {
             }
         });
     }
-    private void makeEmpty(){
+    // show the result popup
+    private void showResult(View v){
+        // init dialog helper
+        dialogResult = new Dialog(this);
+        dialogResult.setContentView(R.layout.custommenu);
+
+        // mapping
+        TextView closeResult = (TextView) dialogResult.findViewById(R.id.tv_closemenu);
+        TextView myScore = (TextView) dialogResult.findViewById(R.id.tv_myscore);
+        Button tryAgain = (Button) dialogResult.findViewById(R.id.btn_tryagain);
+        Button mainGame = (Button) dialogResult.findViewById(R.id.btn_maingame);
+        
+        myScore.setText(String.valueOf(score_count));
+
+        // closeresult-onclick logic
+        closeResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogResult.dismiss();
+            }
+        });
+        tryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogResult.dismiss();
+                recreate();
+            }
+        });
+        mainGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(NewMode1.this, MainActivity.class));
+            }
+        });
+        
+        // make border transparent
+        dialogResult.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // show the helper dialge
+        dialogResult.show();
+    }
+    // error - logic
+    private void handleError(){
+        // increase error_count by 1
+        ++error_count;
+        if (error_count == 4){
+            showResult(null);
+        }
+        else {
+            // gen check id
+            String gencheckId = "img_check" + error_count;
+            int getcheckId = getResources().getIdentifier(gencheckId, "id", getPackageName());
+            ImageView thisCheck = (ImageView) findViewById(getcheckId);
+
+            // change background color of check image to rea
+            thisCheck.setBackgroundColor(getResources().getColor(R.color.red));
+        }
+    }
+    private void clearkey(){
+        for(int i=1;i<8;i++)
+        {
+            // generate key id
+            String genkeyId =  "btn_" + i;
+            int getkeyId = getResources().getIdentifier(genkeyId, "id", getPackageName());
+            Button thisKey = (Button) findViewById(getkeyId);
+
+            thisKey.setBackgroundColor(getResources().getColor(R.color.default_key));
+        }
+    }
+    private void makeEmptyBox(){
         for (int i=0;i<4;i++) {
             String genboxId = "tv_col" + (i+1);
             int getboxID = getResources().getIdentifier(genboxId, "id", getPackageName());
@@ -180,7 +249,7 @@ public class NewMode1 extends AppCompatActivity {
                     // if the letter is not in the answer
                     else {
                         // change the background color of the box and the key to brighter_dark
-                        thisBox.setBackgroundColor(getResources().getColor(R.color.birghter_dark));
+                        thisBox.setBackgroundColor(getResources().getColor(R.color.red));
                     }
                 }
                 preWord = "";
@@ -188,10 +257,43 @@ public class NewMode1 extends AppCompatActivity {
             }
         }
     }
-    private void getWord(){
+    private void setUp(){
         // get word
         trueWord = wordArray.get(wordCount);
         wordCount++;
+
+        // split string into array
+        String[] letterArray = {};
+        for(int i=0;i<4;i++){
+            letterArray[i] = trueWord.substring(i, i+1);
+        }
+
+        // add more 3 letter into the array
+        int n = keyArray.length, count = 0;
+        for(int i=0;i<n;i++){
+            if (!Arrays.asList(keyArray).contains(keyArray[i])){
+                letterArray[++n] = keyArray[i];
+                count++;
+
+                if(count==4)
+                    break;
+            }
+        }
+
+        // suffle the letter list to make it look like random :)
+        Collections.shuffle(Arrays.asList(letterArray));
+        Log.d("this word letter", letterArray.toString());
+
+        // set up key
+        for (int i=1;i<8;i++)
+        {
+            String genkeyId =  "btn_" + i;
+            int getkeyId = getResources().getIdentifier(genkeyId, "id", getPackageName());
+            Button thisKey = (Button) findViewById(getkeyId);
+
+            thisKey.setText(letterArray[i-1]);
+        }
+
     }
     private void dataInit(){
         // get Word data
