@@ -36,8 +36,6 @@
         <item name="stRadius">3dp</item>
 
         <item name="stIconStart">@drawable/ic_baseline_cancel_24</item>
-
-        <item name="stLength">LONG</item> LONG or SHORT
         <item name="stGravity">center</item> top or center
     </style>
 
@@ -53,7 +51,6 @@
         <item name="stStrokeColor">@color/birghter_dark</item>
         <item name="stRadius">3dp</item>
 
-        <item name="stLength">LONG</item> LONG or SHORT
         <item name="stGravity">center</item> top or center
     </style>
 
@@ -71,7 +68,6 @@
 
         <item name="stIconStart">@drawable/ic_baseline_edit_24</item>
 
-        <item name="stLength">LONG</item> LONG or SHORT
         <item name="stGravity">center</item> top or center
     </style>
 
@@ -89,7 +85,6 @@
 
         <item name="stIconStart">@drawable/ic_baseline_check_circle_outline_24</item>
 
-        <item name="stLength">LONG</item> LONG or SHORT
         <item name="stGravity">center</item> top or center
     </style>
 </resources>

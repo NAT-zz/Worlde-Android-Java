@@ -69,6 +69,8 @@ public class NewMode1 extends AppCompatActivity {
         TextView scoreNum = (TextView) findViewById(R.id.tv_scorenum);
 
         dataInit();
+        wordArray.add("LOVE");
+        wordArray.add("NICE");
         setUp();
 
         // keys on click
@@ -102,7 +104,7 @@ public class NewMode1 extends AppCompatActivity {
                 Log.d("preword: ", preWord);
 
                 int result = checkWordValid();
-                if (col_count == 4)
+                if (col_count == 5)
                 {
                     if (result == 0) {
                         StyleableToast.makeText(NewMode1.this, "Not in word list", Toast.LENGTH_SHORT, R.style.not_in_word_list).show();
@@ -111,15 +113,20 @@ public class NewMode1 extends AppCompatActivity {
                     }
                     else if (result == 1){
                         StyleableToast.makeText(NewMode1.this, "NICE", Toast.LENGTH_SHORT, R.style.you_win).show();
+                        score_count++;
+                        scoreNum.setText(String.valueOf(score_count));
+                        preWord="";
+
                         makeEmptyBox();
                         clearkey();
                         setUp();
                     }
                     else if (result == 2) {
-                        col_count = 1;
+                        StyleableToast.makeText(NewMode1.this, "WRONG", Toast.LENGTH_SHORT, R.style.finish_the_word).show();
                         handleError();
                         makeEmptyBox();
                     }
+                    col_count = 1;
                 }
                 else StyleableToast.makeText(NewMode1.this, "Finish the word", Toast.LENGTH_SHORT, R.style.finish_the_word).show();
             }
@@ -134,6 +141,10 @@ public class NewMode1 extends AppCompatActivity {
                 String genboxId = "tv_col" + col_count;
                 int getboxID = getResources().getIdentifier(genboxId, "id", getPackageName());
 
+                // remove last letter
+                if (preWord != null && preWord.length() > 0) {
+                    preWord = preWord.substring(0, preWord.length() - 1);
+                }
                 TextView thisBox = (TextView) findViewById(getboxID);
                 thisBox.setText("");
             }
@@ -143,10 +154,10 @@ public class NewMode1 extends AppCompatActivity {
     private void showResult(View v){
         // init dialog helper
         dialogResult = new Dialog(this);
-        dialogResult.setContentView(R.layout.custommenu);
+        dialogResult.setContentView(R.layout.customresult);
 
         // mapping
-        TextView closeResult = (TextView) dialogResult.findViewById(R.id.tv_closemenu);
+        TextView closeResult = (TextView) dialogResult.findViewById(R.id.tv_closeresult);
         TextView myScore = (TextView) dialogResult.findViewById(R.id.tv_myscore);
         Button tryAgain = (Button) dialogResult.findViewById(R.id.btn_tryagain);
         Button mainGame = (Button) dialogResult.findViewById(R.id.btn_maingame);
@@ -184,17 +195,16 @@ public class NewMode1 extends AppCompatActivity {
     private void handleError(){
         // increase error_count by 1
         ++error_count;
-        if (error_count == 4){
-            showResult(null);
-        }
-        else {
-            // gen check id
-            String gencheckId = "img_check" + error_count;
-            int getcheckId = getResources().getIdentifier(gencheckId, "id", getPackageName());
-            ImageView thisCheck = (ImageView) findViewById(getcheckId);
+        // gen check id
+        String gencheckId = "img_check" + error_count;
+        int getcheckId = getResources().getIdentifier(gencheckId, "id", getPackageName());
+        ImageView thisCheck = (ImageView) findViewById(getcheckId);
 
-            // change background color of check image to rea
-            thisCheck.setBackgroundColor(getResources().getColor(R.color.red));
+        // change background color of check image to rea
+        thisCheck.setBackgroundColor(getResources().getColor(R.color.red));
+
+        if (error_count == 3){
+            showResult(null);
         }
     }
     private void clearkey(){
@@ -259,30 +269,32 @@ public class NewMode1 extends AppCompatActivity {
     }
     private void setUp(){
         // get word
-        trueWord = wordArray.get(wordCount);
-        wordCount++;
-
-        // split string into array
-        String[] letterArray = {};
-        for(int i=0;i<4;i++){
-            letterArray[i] = trueWord.substring(i, i+1);
+        if (wordCount < wordArray.size()) {
+            trueWord = wordArray.get(wordCount);
+            wordCount++;
         }
 
+        // split string into array
+        String[] letterArray = new String[7];
+        for(int i=0;i<4;i++){
+            letterArray[i] = String.valueOf(trueWord.charAt(i));
+        }
         // add more 3 letter into the array
-        int n = keyArray.length, count = 0;
+        int n = keyArray.length, n1 = 4;
+        Collections.shuffle(Arrays.asList(keyArray));
         for(int i=0;i<n;i++){
-            if (!Arrays.asList(keyArray).contains(keyArray[i])){
-                letterArray[++n] = keyArray[i];
-                count++;
+            if (!Arrays.asList(letterArray).contains(keyArray[i])){
+                letterArray[n1] = keyArray[i];
+                ++n1;
 
-                if(count==4)
+                if(n1==7)
                     break;
             }
         }
 
         // suffle the letter list to make it look like random :)
         Collections.shuffle(Arrays.asList(letterArray));
-        Log.d("this word letter", letterArray.toString());
+        Log.w("this word letter", letterArray.toString());
 
         // set up key
         for (int i=1;i<8;i++)

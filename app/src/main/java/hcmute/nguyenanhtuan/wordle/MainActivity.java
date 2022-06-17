@@ -140,13 +140,13 @@ public class MainActivity extends AppCompatActivity {
                 if (col_count == 6)
                 {
                     if (result == 0) {
-                        StyleableToast.makeText(MainActivity.this, "Not in word list", Toast.LENGTH_LONG, R.style.not_in_word_list).show();
+                        StyleableToast.makeText(MainActivity.this, "Not in word list", Toast.LENGTH_SHORT, R.style.not_in_word_list).show();
                     }
                     else if (result == 1){
                         if (row_count < 5)
-                            StyleableToast.makeText(MainActivity.this, "FANSTACTIC", Toast.LENGTH_LONG, R.style.you_win).show();
+                            StyleableToast.makeText(MainActivity.this, "FANSTACTIC", Toast.LENGTH_SHORT, R.style.you_win).show();
                         else
-                            StyleableToast.makeText(MainActivity.this, "PHEW", Toast.LENGTH_LONG, R.style.you_win).show();
+                            StyleableToast.makeText(MainActivity.this, "PHEW", Toast.LENGTH_SHORT, R.style.you_win).show();
 
                         if(row_count == 1)
                             thisUser.getRecord().setFirstWin(thisUser.getRecord().getFirstWin()+1);
@@ -193,6 +193,10 @@ public class MainActivity extends AppCompatActivity {
                 String genboxId = "tv_row" + row_count + "_" + col_count;
                 int getboxID = getResources().getIdentifier(genboxId, "id", getPackageName());
 
+                // remove last letter
+                if (preWord != null && preWord.length() > 0) {
+                    preWord = preWord.substring(0, preWord.length() - 1);
+                }
                 TextView thisBox = (TextView) findViewById(getboxID);
                 thisBox.setText("");
             }
