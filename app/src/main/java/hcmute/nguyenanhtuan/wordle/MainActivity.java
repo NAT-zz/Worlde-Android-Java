@@ -1,16 +1,12 @@
 package hcmute.nguyenanhtuan.wordle;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,9 +19,6 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,11 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Random;
 
 import io.github.muddz.styleabletoast.StyleableToast;
@@ -257,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 // get a random int
                 int random = new Random().nextInt(wordArray.size());
+                Log.d("ngau nhien", String.valueOf(random));
                 // get word with the int above
                 trueWord = wordArray.get(random);
             }
@@ -296,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
                     TextView thisBox = (TextView) findViewById(getboxID);
 
                     //get key
-                    String genkeyId =  "btn_" + preWord.substring(i, i+1);
+                    String genkeyId =  "tv_" + preWord.substring(i, i+1);
                     int getkeyId = getResources().getIdentifier(genkeyId, "id", getPackageName());
                     TextView thisKey = (TextView) findViewById(getkeyId);
 
@@ -326,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // update user record
     private void updateRecord(){
-        databaseReference = db.getReference("User");
+        databaseReference = db.getReference("Users");
 
         databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("record")
                 .setValue(thisUser.getRecord());
@@ -383,8 +373,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
-
-
+        
         // make border transparent
         dialogMenu.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // show the helper dialge

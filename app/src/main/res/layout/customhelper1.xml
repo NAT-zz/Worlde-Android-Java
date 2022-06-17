@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="355dp"
+    android:layout_height="525dp"
+    android:background="#232323"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:id="@+id/tv_closehelper1"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:textColor="@color/white"
+        android:text="X"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/circlebackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_howtoplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="HOW TO PLAY"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textAlignment="center"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_ins1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+
+        android:text="You need to GUESS the correct words with 7 letters provided"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+
+        app:layout_constraintTop_toBottomOf="@id/tv_howtoplay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_ins2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:text="Each guess must be a valid four-letter word with the provided letters. Hit the submit button to submit."
+        android:textColor="@color/white"
+        android:textSize="15dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_ins1"/>
+
+    <TextView
+        android:id="@+id/tv_ins3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:text="Only 4 letters out of 7 provided letters is in the word"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_ins2"/>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="409dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="15dp"
+
+        android:background="#484C49"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ins3" />
+
+    <TextView
+        android:id="@+id/tv_example"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:text="RULES"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider1"/>
+
+    <TextView
+        android:id="@+id/tv_box11"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:layout_marginTop="16dp"
+
+        android:gravity="center"
+        android:text="X"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_example"/>
+
+    <TextView
+        android:id="@+id/tv_box12"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="5dp"
+
+        android:gravity="center"
+        android:text="X"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"
+
+        app:layout_constraintStart_toEndOf="@id/tv_box11"
+        app:layout_constraintTop_toBottomOf="@id/tv_example"/>
+
+    <TextView
+        android:id="@+id/tv_box13"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:background="@color/green"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="5dp"
+
+        android:gravity="center"
+        android:text="X"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"
+
+        app:layout_constraintStart_toEndOf="@id/tv_box12"
+        app:layout_constraintTop_toBottomOf="@id/tv_example"/>
+
+    <TextView
+        android:id="@+id/tv_com1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:text="You only have a total of 3 chances, after that the game end"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+
+        app:layout_constraintTop_toBottomOf="@id/tv_box11"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/tv_com2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:text="SCORE"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="20dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_com1"/>
+
+    <TextView
+        android:id="@+id/tv_com4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:text="1"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_com2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_com5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:text="With each correct word, you will gain 1 point"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+
+        app:layout_constraintTop_toBottomOf="@id/tv_com4"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="409dp"
+        android:layout_height="3dp"
+        android:layout_marginBottom="15dp"
+
+        android:background="#484C49"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_ins4" />
+
+    <TextView
+        android:id="@+id/tv_ins4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+
+        android:text="Try to archieve as high score as you could!"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

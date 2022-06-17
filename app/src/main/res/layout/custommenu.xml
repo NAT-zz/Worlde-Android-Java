@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="360dp"
     android:layout_height="485dp"
-    android:background="@drawable/gradient_1"
+    android:background="@color/birghter_dark"
     android:padding="5dp"
     android:layout_gravity="center">
 
@@ -38,9 +38,9 @@
 
         <Button
             android:id="@+id/btn_cont"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
 
             android:text="Continue"
             android:textColor="@color/black"
@@ -51,7 +51,7 @@
 
         <Button
             android:id="@+id/btn_score"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
 
             android:text="Score board"
@@ -61,23 +61,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_cont"/>
 
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="Still not enough ?"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+
+            app:layout_constraintTop_toBottomOf="@id/btn_logout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <Button
             android:id="@+id/btn_newMode"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
 
-            android:text="New mode"
+            android:text="Zen mode"
             android:textColor="@color/black"
+            android:backgroundTint="@color/green"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_score"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_more"/>
 
 
         <Button
             android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
 
             android:text="Log out"
@@ -85,7 +101,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_newMode"/>
+            app:layout_constraintTop_toBottomOf="@id/btn_score"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

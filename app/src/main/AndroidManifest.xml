@@ -11,22 +11,22 @@
         android:theme="@style/Theme.Wordle"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".NewMode1"
+            android:name="hcmute.nguyenanhtuan.wordle.NewMode1"
             android:exported="false" />
         <activity
-            android:name=".ScoreBoardActivity"
+            android:name="hcmute.nguyenanhtuan.wordle.ScoreBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name="hcmute.nguyenanhtuan.wordle.ForgotPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="hcmute.nguyenanhtuan.wordle.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="hcmute.nguyenanhtuan.wordle.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="hcmute.nguyenanhtuan.wordle.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

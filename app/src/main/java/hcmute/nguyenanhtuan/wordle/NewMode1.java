@@ -22,13 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
-import java.util.regex.Pattern;
 
 import io.github.muddz.styleabletoast.StyleableToast;
 
@@ -40,7 +36,7 @@ public class NewMode1 extends AppCompatActivity {
             "Z", "X", "C", "V", "B", "N", "M"};
 
     // dialog
-    Dialog dialogResult;
+    Dialog dialogResult, dialogHelp;
 
     // coordinate
     int col_count = 1, error_count = 0, score_count = 0;
@@ -66,11 +62,16 @@ public class NewMode1 extends AppCompatActivity {
         Button submit = (Button) findViewById(R.id.btn_submit);
         Button delete = (Button) findViewById(R.id.btn_del);
         ImageButton restart = (ImageButton) findViewById(R.id.btn_restart);
+        ImageButton helper = (ImageButton) findViewById(R.id.btn_menuhelp);
         TextView scoreNum = (TextView) findViewById(R.id.tv_scorenum);
 
         dataInit();
-        wordArray.add("LOVE");
-        wordArray.add("NICE");
+
+        Collections.addAll(wordArray, "LOVE", "NICE", "BAKE", "WEST", "RICE", "TIDE",
+                                                "LIST", "RACE", "HOPE", "NEED", "HUGE", "BEST",
+                                                "GOOD", "ZERO", "TREE", "CUTE", "NINE", "EXIT",
+                                                "STAY", "COME", "COLD", "FIVE");
+        Collections.shuffle(wordArray);
         setUp();
 
         // keys on click
@@ -94,6 +95,13 @@ public class NewMode1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recreate();
+            }
+        });
+        // helper-onclick logic
+        helper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showHelper(null);
             }
         });
         // enter-onclick logic
@@ -149,6 +157,27 @@ public class NewMode1 extends AppCompatActivity {
                 thisBox.setText("");
             }
         });
+    }
+    // show the helper popup
+    private void showHelper(View v){
+        // init dialog helper
+        dialogHelp = new Dialog(this);
+        dialogHelp.setContentView(R.layout.customhelper1);
+
+        // mapping
+        TextView closeHelper = (TextView) dialogHelp.findViewById(R.id.tv_closehelper1);
+
+        // closehelper-onclick logic
+        closeHelper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogHelp.dismiss();
+            }
+        });
+        // make border transparent
+        dialogHelp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // show the helper dialge
+        dialogHelp.show();
     }
     // show the result popup
     private void showResult(View v){
@@ -239,29 +268,6 @@ public class NewMode1 extends AppCompatActivity {
                 return 0;
             }
             else{
-                for(int i=0;i<4;i++){
-                    //get box
-                    String genboxId = "tv_col" + (i+1);
-                    int getboxID = getResources().getIdentifier(genboxId, "id", getPackageName());
-                    TextView thisBox = (TextView) findViewById(getboxID);
-
-                    //get key
-//                    String genkeyId =  "tv_" + preWord.substring(i, i+1);
-//                    int getkeyId = getResources().getIdentifier(genkeyId, "id", getPackageName());
-//                    Button thisKey = (Button) findViewById(getkeyId);
-
-                    // if the letter is at the right place
-                    if (trueWord.charAt(i) == preWord.charAt(i)) {
-                        // change the background color of the box and the key to green
-                        thisBox.setBackgroundColor(getResources().getColor(R.color.green));
-//                        thisKey.setBackgroundColor(getResources().getColor(R.color.green));
-                    }
-                    // if the letter is not in the answer
-                    else {
-                        // change the background color of the box and the key to brighter_dark
-                        thisBox.setBackgroundColor(getResources().getColor(R.color.red));
-                    }
-                }
                 preWord = "";
                 return 2;
             }

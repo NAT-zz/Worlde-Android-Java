@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
-        android:id="@+id/btn_myscore"
+        android:id="@+id/btn_menuhelp"
         android:layout_width="50dp"
         android:layout_height="50dp"
 
@@ -27,7 +27,7 @@
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_info_details"
+        app:srcCompat="@android:drawable/ic_menu_help"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
