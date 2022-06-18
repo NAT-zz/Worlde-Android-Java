@@ -21,29 +21,29 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // views
     EditText fullName, age, email, password;
     TextView banner;
     Button register;
     ProgressBar progressBar;
 
-    // firebase
+    // firebase authentication
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // mappping views with variables
         mapping();
 
         // init firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
-        // element onclick
+        // elements onclick
         register.setOnClickListener(this);
         banner.setOnClickListener(this);
-
     }
     // map elements with ids
     private void mapping(){
@@ -56,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         register = (Button) findViewById(R.id.btn_register);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
     }
-    // empty field
+    // empty fields
     private void makeEmpty(){
         fullName.setText("");
         age.setText("");

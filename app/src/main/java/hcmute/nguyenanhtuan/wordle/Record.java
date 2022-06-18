@@ -2,11 +2,16 @@ package hcmute.nguyenanhtuan.wordle;
 
 public class Record {
 
+    // play times
     private int played;
+    // win times
     private int winCount;
+    // loose times
     private int looseCount;
+    // max streak
     private int currentStreak;
 
+    // the row' win
     private int firstWin;
     private int secondWin;
     private int thirdWin;
@@ -14,8 +19,9 @@ public class Record {
     private int fifthWin;
     private int sixthWin;
 
+    // constructor with no arguments
     public Record() {}
-
+    // constructor with arguments
     public Record(int played, int winCount, int looseCount, int currentStreak, int firstWin, int secondWin, int thirdWin, int fourthWin, int fifthWin, int sixthWin) {
         this.played = played;
         this.winCount = winCount;
@@ -28,7 +34,7 @@ public class Record {
         this.fifthWin = fifthWin;
         this.sixthWin = sixthWin;
     }
-
+    // getter and setter
     public int getPlayed() {
         return played;
     }

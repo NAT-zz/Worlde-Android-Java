@@ -13,29 +13,32 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
 
 public class ScoreBoardAdapter extends BaseAdapter {
+    // init socreboard activity
     ScoreBoardActivity scoreBoardActivity;
+    // init usres array
     ArrayList<User> users;
+    // init animation
     Animation animation;
 
+    // adapter's constructer with arguments
     public ScoreBoardAdapter(ScoreBoardActivity scoreBoardActivity, ArrayList<User> users) {
         this.scoreBoardActivity = scoreBoardActivity;
         this.users = users;
     }
 
-    private static int getRandom(int max){
-        return (int) (Math.random()*max);
-    }
-
+    // get the user's list size
     @Override
     public int getCount() {
         return users.size();
     }
 
+    // get index of the current user
     @Override
     public Object getItem(int i) {
         return i;
     }
 
+    // get id of current user
     @Override
     public long getItemId(int i) {
         return i;
@@ -43,14 +46,15 @@ public class ScoreBoardAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        // inflate the item for each user
         view = LayoutInflater.from(scoreBoardActivity).inflate(R.layout.score_item_layout, viewGroup, false);
+        // load the animation for each item
         animation = AnimationUtils.loadAnimation(scoreBoardActivity, R.anim.animation1);
 
+        // views
         TextView userName, pos, score;
-        ConstraintLayout ll_bg;
 
         // mapping
-        ll_bg = view.findViewById(R.id.ll_bg);
         userName = view.findViewById(R.id.tv_userName);
         pos = view.findViewById(R.id.tv_pos);
         score = view.findViewById(R.id.tv_score);

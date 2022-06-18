@@ -34,31 +34,33 @@ import io.github.muddz.styleabletoast.StyleableToast;
 
 public class MainActivity extends AppCompatActivity {
 
-    // coordinate
+    // coordinate of current box
     int row_count = 1;
     int col_count = 1;
 
-    // view
+    // views
     TextView enter, delete;
     Dialog dialog, dialogHelp, dialogMenu;
     ImageButton statistic, replay, help, menu;
 
-    // Key
+    // Keys
     String[] keyArray = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
                         "A", "S", "D", "F", "G", "H", "J", "K", "L",
                         "Z", "X", "C", "V", "B", "N", "M"};
-    //firebase
+    // firebase
     private FirebaseDatabase db;
     private DatabaseReference databaseReference;
     // firebase authentication
     private FirebaseAuth mAuth;
+    // the current user
     private FirebaseUser currentUser;
+    // id of the current user
     private String userID;
 
-    //user
+    // current user mapping the User class
     User thisUser;
 
-    // word in a row
+    // the word in the current row
     String preWord="";
     // list of words
     ArrayList<String> wordArray = new ArrayList<>();
@@ -70,15 +72,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // mapping views with variables
         mapping();
+        // init data
         dataInit();
 
-        // keys on click
+        // keys on click logic
         for(int i=0;i<keyArray.length;i++)
         {
             // generate key id
             String genkeyId =  "tv_" + keyArray[i];
+            // get the id but in int
             int getkeyId = getResources().getIdentifier(genkeyId, "id", getPackageName());
+            // get the key
             TextView thisKey = (TextView) findViewById(getkeyId);
 
             int finalI = i;
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // show the menu pop-up
                 showMenu(null);
             }
         });
@@ -101,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // show the helper pop-up
                 showHelper(null);
             }
         });
@@ -108,12 +116,14 @@ public class MainActivity extends AppCompatActivity {
         statistic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // show the helper pop-up
                 showPopUp(null);
             }
         });
         // replay-onclick logic
         replay.setOnClickListener(new View.OnClickListener() {
             @Override
+            // restart the activity
             public void onClick(View view) {
                 recreate();
             }
@@ -125,18 +135,24 @@ public class MainActivity extends AppCompatActivity {
                 // print the current word to log
                 Log.d("preword: ", preWord);
 
+                // get the return value after checking
                 int result = checkWordValid();
+                // if it's the last letter
                 if (col_count == 6)
                 {
                     if (result == 0) {
+                        // pop a message if the word is not in the word list
                         StyleableToast.makeText(MainActivity.this, "Not in word list", Toast.LENGTH_SHORT, R.style.not_in_word_list).show();
                     }
+                    // if player guess the correct word
                     else if (result == 1){
+                        // pop a message if if's not the last row
                         if (row_count < 5)
                             StyleableToast.makeText(MainActivity.this, "FANSTACTIC", Toast.LENGTH_SHORT, R.style.you_win).show();
                         else
                             StyleableToast.makeText(MainActivity.this, "PHEW", Toast.LENGTH_SHORT, R.style.you_win).show();
 
+                        // set the user's record with the current row
                         if(row_count == 1)
                             thisUser.getRecord().setFirstWin(thisUser.getRecord().getFirstWin()+1);
                         else if (row_count == 2)
@@ -150,25 +166,34 @@ public class MainActivity extends AppCompatActivity {
                         else
                             thisUser.getRecord().setSixthWin(thisUser.getRecord().getSixthWin()+1);
 
+                        // set the user's record about play-times, current streak and win-times
                         thisUser.getRecord().setPlayed(thisUser.getRecord().getPlayed()+1);
                         thisUser.getRecord().setCurrentStreak(thisUser.getRecord().getCurrentStreak()+1);
                         thisUser.getRecord().setWinCount(thisUser.getRecord().getWinCount()+1);
+                        // update the record to firebase
                         updateRecord();
                     }
+                    // the word is in the word list but not correct
                     else if (result == 2) {
+                        // if it's not the last row
                         if (row_count != 6)
                             row_count++;
                         else {
+                            // pop the answer if the last try run out
                             StyleableToast.makeText(MainActivity.this, trueWord, Toast.LENGTH_LONG, R.style.the_word).show();
 
+                            // set the user record (the player lost)
                             thisUser.getRecord().setPlayed(thisUser.getRecord().getPlayed()+1);
                             thisUser.getRecord().setCurrentStreak(0);
                             thisUser.getRecord().setLooseCount(thisUser.getRecord().getLooseCount()+1);
+                            // update the record to firebase
                             updateRecord();
                         }
+                        // increase the "y" coordinate
                         col_count = 1;
                     }
                 }
+                // pop a message if not
                 else StyleableToast.makeText(MainActivity.this, "Finish the word", Toast.LENGTH_LONG, R.style.finish_the_word).show();
             }
         });
@@ -176,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // if the "y" coordinate is not the first
                 if (col_count != 1)
                     col_count--;
                 // get the box id
@@ -186,11 +212,14 @@ public class MainActivity extends AppCompatActivity {
                 if (preWord != null && preWord.length() > 0) {
                     preWord = preWord.substring(0, preWord.length() - 1);
                 }
+
+                // reset the current box
                 TextView thisBox = (TextView) findViewById(getboxID);
                 thisBox.setText("");
             }
         });
     }
+    // mapping views with variables
     private void mapping(){
         enter = (TextView) findViewById(R.id.tv_enter);
         delete = (TextView) findViewById(R.id.tv_del);
@@ -203,19 +232,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        // init the firsebse instance
         mAuth = FirebaseAuth.getInstance();
+        // get the current loged-in user
         currentUser = mAuth.getCurrentUser();
 
+        // if no user is loged-in
         if (currentUser==null) {
+            // end the activity & to login
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
         else{
+            // get the current user's id
             userID = currentUser.getUid();
+            // print the user's email to log
             Log.d("user", currentUser.getEmail());
 
-            // get users collection
+            // get users collection on firebase
             databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+            // get the user data with the id
             databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -231,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+    // init game data
     private void dataInit(){
         // get Word data
         db = FirebaseDatabase.getInstance();
@@ -246,7 +283,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 // get a random int
                 int random = new Random().nextInt(wordArray.size());
-                Log.d("ngau nhien", String.valueOf(random));
                 // get word with the int above
                 trueWord = wordArray.get(random);
             }
@@ -257,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    // check the current word
     private int checkWordValid() {
         // if the answer is corrent
         if (preWord.equals(trueWord)) {
@@ -316,8 +353,10 @@ public class MainActivity extends AppCompatActivity {
     }
     // update user record
     private void updateRecord(){
+        // get the Users collection on firebase
         databaseReference = db.getReference("Users");
 
+        // get the record data of the current user
         databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("record")
                 .setValue(thisUser.getRecord());
     }
@@ -411,6 +450,7 @@ public class MainActivity extends AppCompatActivity {
                 + thisUser.getRecord().getThirdWin() + thisUser.getRecord().getFourthWin()
                 + thisUser.getRecord().getFifthWin() + thisUser.getRecord().getSixthWin();
 
+        // calculate the ratio with each row's win
         float first = (thisUser.getRecord().getFirstWin()/ (float) totalGuess) * 100;
         float second = (thisUser.getRecord().getSecondWin()/ (float) totalGuess) * 100;
         float third = (thisUser.getRecord().getThirdWin()/ (float) totalGuess) * 100;
@@ -434,7 +474,6 @@ public class MainActivity extends AppCompatActivity {
         pieEntry = new PieEntry(sixth, "Sixth");
         pieEntries.add(pieEntry);
 
-        Log.d("pie entries", pieEntries.toString());
         // init pie data set
         PieDataSet pieDataSet = new PieDataSet(pieEntries, "Guess");
         // set colors

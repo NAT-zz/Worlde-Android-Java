@@ -60,6 +60,7 @@ public class User {
         this.record = record;
     }
 
+    // calculater the user's score
     public void setScore(){
         if (this.getRecord().getPlayed() == 0)
             this.score = (float) 0;

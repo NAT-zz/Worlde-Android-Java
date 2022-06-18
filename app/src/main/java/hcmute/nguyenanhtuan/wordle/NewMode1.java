@@ -30,7 +30,7 @@ import io.github.muddz.styleabletoast.StyleableToast;
 
 public class NewMode1 extends AppCompatActivity {
 
-    // Key
+    // Keys
     String[] keyArray = {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
             "A", "S", "D", "F", "G", "H", "J", "K", "L",
             "Z", "X", "C", "V", "B", "N", "M"};
@@ -38,14 +38,14 @@ public class NewMode1 extends AppCompatActivity {
     // dialog
     Dialog dialogResult, dialogHelp;
 
-    // coordinate
+    // coordinate & user's current score
     int col_count = 1, error_count = 0, score_count = 0;
 
-    // answer
+    // the user's guess and the answer
     String preWord = "";
     String trueWord = "";
 
-    // database
+    // firebase
     private FirebaseDatabase db;
     private DatabaseReference databaseReference;
 
@@ -65,13 +65,17 @@ public class NewMode1 extends AppCompatActivity {
         ImageButton helper = (ImageButton) findViewById(R.id.btn_menuhelp);
         TextView scoreNum = (TextView) findViewById(R.id.tv_scorenum);
 
+        // inti game data
         dataInit();
 
+        // add words to the list
         Collections.addAll(wordArray, "LOVE", "NICE", "BAKE", "WEST", "RICE", "TIDE",
                                                 "LIST", "RACE", "HOPE", "NEED", "HUGE", "BEST",
                                                 "GOOD", "ZERO", "TREE", "CUTE", "NINE", "EXIT",
                                                 "STAY", "COME", "COLD", "FIVE");
+        // shuffle the list to make it looks like random
         Collections.shuffle(wordArray);
+        // set up the game
         setUp();
 
         // keys on click
@@ -101,6 +105,7 @@ public class NewMode1 extends AppCompatActivity {
         helper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // show the helper dialog
                 showHelper(null);
             }
         });
@@ -111,31 +116,47 @@ public class NewMode1 extends AppCompatActivity {
                 // print the current word to log
                 Log.d("preword: ", preWord);
 
+                // get the return value after checking the user's guess
                 int result = checkWordValid();
+                // if it's the last letter
                 if (col_count == 5)
                 {
+                    // if the guess is wrong
                     if (result == 0) {
+                        // pop a message
                         StyleableToast.makeText(NewMode1.this, "Not in word list", Toast.LENGTH_SHORT, R.style.not_in_word_list).show();
+                        // handle the error
                         handleError();
+                        // reset the boxes
                         makeEmptyBox();
                     }
+                    // the it's correct
                     else if (result == 1){
+                        // pop a message
                         StyleableToast.makeText(NewMode1.this, "NICE", Toast.LENGTH_SHORT, R.style.you_win).show();
+                        // increase score
                         score_count++;
                         scoreNum.setText(String.valueOf(score_count));
+                        // reset the guessed word
                         preWord="";
 
+                        // reset the boxes
                         makeEmptyBox();
+                        // reset the keys
                         clearkey();
+                        // set up new game
                         setUp();
                     }
+                    // if the guess is wrong
                     else if (result == 2) {
                         StyleableToast.makeText(NewMode1.this, "WRONG", Toast.LENGTH_SHORT, R.style.finish_the_word).show();
                         handleError();
                         makeEmptyBox();
                     }
+                    // reset "y" coordinate
                     col_count = 1;
                 }
+                // pop a message if the word is not finished
                 else StyleableToast.makeText(NewMode1.this, "Finish the word", Toast.LENGTH_SHORT, R.style.finish_the_word).show();
             }
         });
@@ -143,6 +164,7 @@ public class NewMode1 extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // if it's not the first letter
                 if (col_count != 1)
                     col_count--;
                 // get the box id
@@ -153,6 +175,7 @@ public class NewMode1 extends AppCompatActivity {
                 if (preWord != null && preWord.length() > 0) {
                     preWord = preWord.substring(0, preWord.length() - 1);
                 }
+                // reset the box
                 TextView thisBox = (TextView) findViewById(getboxID);
                 thisBox.setText("");
             }
@@ -197,20 +220,27 @@ public class NewMode1 extends AppCompatActivity {
         closeResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // close the dialog
                 dialogResult.dismiss();
             }
         });
+        // tryAgain-onclick logic
         tryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // close the dialog
                 dialogResult.dismiss();
+                // restart the game
                 recreate();
             }
         });
+        // mainGame-onclick logic
         mainGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // end the activity
                 finish();
+                // to main game mode
                 startActivity(new Intent(NewMode1.this, MainActivity.class));
             }
         });
@@ -220,7 +250,7 @@ public class NewMode1 extends AppCompatActivity {
         // show the helper dialge
         dialogResult.show();
     }
-    // error - logic
+    // error handler
     private void handleError(){
         // increase error_count by 1
         ++error_count;
@@ -232,10 +262,12 @@ public class NewMode1 extends AppCompatActivity {
         // change background color of check image to rea
         thisCheck.setBackgroundColor(getResources().getColor(R.color.red));
 
+        // if the chances run out
         if (error_count == 3){
             showResult(null);
         }
     }
+    // reset keys handler
     private void clearkey(){
         for(int i=1;i<8;i++)
         {
@@ -244,18 +276,23 @@ public class NewMode1 extends AppCompatActivity {
             int getkeyId = getResources().getIdentifier(genkeyId, "id", getPackageName());
             Button thisKey = (Button) findViewById(getkeyId);
 
+            // set background-color to default
             thisKey.setBackgroundColor(getResources().getColor(R.color.default_key));
         }
     }
+    // reset boxes handler
     private void makeEmptyBox(){
         for (int i=0;i<4;i++) {
+            // generate box id
             String genboxId = "tv_col" + (i+1);
             int getboxID = getResources().getIdentifier(genboxId, "id", getPackageName());
 
+            // reset the box
             TextView thisBox = (TextView) findViewById(getboxID);
             thisBox.setText("");
         }
     }
+    // check the guessed word
     private int checkWordValid() {
         // if the answer is corrent
         if (preWord.equals(trueWord)) {
@@ -273,6 +310,7 @@ public class NewMode1 extends AppCompatActivity {
             }
         }
     }
+    // set up the game
     private void setUp(){
         // get word
         if (wordCount < wordArray.size()) {
@@ -285,9 +323,11 @@ public class NewMode1 extends AppCompatActivity {
         for(int i=0;i<4;i++){
             letterArray[i] = String.valueOf(trueWord.charAt(i));
         }
-        // add more 3 letter into the array
+
         int n = keyArray.length, n1 = 4;
+        // shuffle the key array
         Collections.shuffle(Arrays.asList(keyArray));
+        // add more 3 letter into the array
         for(int i=0;i<n;i++){
             if (!Arrays.asList(letterArray).contains(keyArray[i])){
                 letterArray[n1] = keyArray[i];
@@ -298,26 +338,29 @@ public class NewMode1 extends AppCompatActivity {
             }
         }
 
-        // suffle the letter list to make it look like random :)
+        // shuffle the letter list to make it look like random :)
         Collections.shuffle(Arrays.asList(letterArray));
+        // print the current guessed word into log
         Log.w("this word letter", letterArray.toString());
 
         // set up key
         for (int i=1;i<8;i++)
         {
+            // generate the key's id
             String genkeyId =  "btn_" + i;
             int getkeyId = getResources().getIdentifier(genkeyId, "id", getPackageName());
             Button thisKey = (Button) findViewById(getkeyId);
 
+            // set the letter of the key
             thisKey.setText(letterArray[i-1]);
         }
 
     }
+    // init the data
     private void dataInit(){
         // get Word data
         db = FirebaseDatabase.getInstance();
         databaseReference = db.getReference("Word2");
-
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -333,16 +376,21 @@ public class NewMode1 extends AppCompatActivity {
             }
         });
     }
+    // keys-onlic logic
     private void keyOnclick(String x){
-        //generate box id
+        // if it's not the last letter
         if(col_count != 5) {
+            //generate box id
             String genboxId = "tv_col" + col_count;
             int getboxID = getResources().getIdentifier(genboxId, "id", getPackageName());
 
+            // set the box with the clicked key
             TextView thisBox = (TextView) findViewById(getboxID);
             thisBox.setText(x);
 
+            // add the letter of the clicked key to preWord
             preWord += x;
+            // increase the col
             ++col_count;
         }
     }
